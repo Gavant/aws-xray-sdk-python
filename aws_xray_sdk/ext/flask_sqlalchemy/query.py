@@ -51,9 +51,9 @@ class XRaySignallingSession(XRaySession):
 
 
 class XRayFlaskSqlAlchemy(SQLAlchemy):
-    def __init__(self, app=None, use_native_unicode=True, session_options=None,
+    def __init__(self, app=None, session_options=None,
                  metadata=None, query_class=XRayBaseQuery, model_class=Model):
-        super().__init__(app, use_native_unicode, session_options,
+        super().__init__(app, session_options,
                          metadata, query_class, model_class)
 
     def create_session(self, options):

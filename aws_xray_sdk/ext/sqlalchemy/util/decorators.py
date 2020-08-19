@@ -26,6 +26,7 @@ def decorate_all_functions(function_decorator):
 def xray_on_call(cls, func):
     def wrapper(*args, **kw):
         from ..query import XRayQuery, XRaySession
+        from sqlalchemy.orm import Query
         try:
             from ...flask_sqlalchemy.query import XRaySignallingSession
             has_sql_alchemy = True
@@ -42,9 +43,9 @@ def xray_on_call(cls, func):
                     sql = parse_bind(arg.bind)
                 if has_sql_alchemy and isinstance(arg, XRaySignallingSession):
                     sql = parse_bind(arg.bind)
-        if class_name == 'sqlalchemy.orm.query':
+        if class_name == 'sqlalchemy.orm.session.query':
             for arg in args:
-                if isinstance(arg, XRayQuery):
+                if isinstance(arg, Query):
                     try:
                         sql = parse_bind(arg.session.bind)
                         if xray_recorder.stream_sql:
