@@ -43,7 +43,7 @@ def xray_on_call(cls, func):
                     sql = parse_bind(arg.bind)
                 if has_sql_alchemy and isinstance(arg, XRaySignallingSession):
                     sql = parse_bind(arg.bind)
-        if class_name == 'sqlalchemy.orm.session.query':
+        if class_name == 'sqlalchemy.orm.query':
             for arg in args:
                 if isinstance(arg, Query):
                     try:
