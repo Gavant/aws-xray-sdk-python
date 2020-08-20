@@ -13,6 +13,8 @@ def decorate_all_functions(function_decorator):
             for name, obj in vars(c).items():
                 if name.startswith("_"):
                     continue
+                if 'bind' in name:
+                    continue
                 if callable(obj):
                     try:
                         obj = obj.__func__  # unwrap Python 2 unbound method
@@ -57,7 +59,6 @@ def xray_on_call(cls, func):
                 # Strip URL of ? and following text
                 sub_name = strip_url(sql['url'])
                 subsegment = xray_recorder.begin_subsegment(sub_name, namespace='remote')
-                sql['Url'] = func.__qualname__
             else:
                 subsegment = None
 
