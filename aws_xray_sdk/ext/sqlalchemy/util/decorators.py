@@ -54,10 +54,10 @@ def xray_on_call(cls, func):
                         sql = None
         if sql is not None:
             if getattr(c._local, 'entities', None) is not None:
-                # add name
-                sub_name = func.__qualname__
+                # Strip URL of ? and following text
+                sub_name = strip_url(sql['url'])
                 subsegment = xray_recorder.begin_subsegment(sub_name, namespace='remote')
-                sql['Url'] = sub_name
+                sql['Url'] = func.__qualname__
             else:
                 subsegment = None
 
