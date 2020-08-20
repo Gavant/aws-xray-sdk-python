@@ -57,6 +57,7 @@ def xray_on_call(cls, func):
                 # add name
                 sub_name = func.__qualname__
                 subsegment = xray_recorder.begin_subsegment(sub_name, namespace='remote')
+                sql['Url'] = sub_name
             else:
                 subsegment = None
 
