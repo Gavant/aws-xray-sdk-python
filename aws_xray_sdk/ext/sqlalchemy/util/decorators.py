@@ -9,11 +9,14 @@ from sqlalchemy.engine.base import Connection
 
 def decorate_all_functions(function_decorator):
     def decorator(cls):
+       # 'one_or_none' included in 'one' 
+        funcs_to_skip = ['bind', 'correlate', 'enable_eagerloads', 'with_labels', 'options', 'add_columns', 
+        'offset', 'limit', 'order_by', 'subquery', 'slice', 'filter', 'one']
         for c in cls.__bases__:
             for name, obj in vars(c).items():
                 if name.startswith("_"):
                     continue
-                if 'bind' in name:
+                if [e for e in funcs_to_skip if e in name]:
                     continue
                 if callable(obj):
                     try:
