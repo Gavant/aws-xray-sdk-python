@@ -42,7 +42,15 @@ class XRaySignallingSession(XRaySession):
     def get_bind(self, mapper=None, clause=None):
         # mapper is None if someone tries to just get a connection
         if mapper is not None:
-            info = getattr(mapper.mapped_table, 'info', {})
+            # info = getattr(mapper.mapped_table, 'info', {})
+            try:
+                # SA >= 1.3
+                persist_selectable = mapper.persist_selectable
+            except AttributeError:
+                # SA < 1.3
+                persist_selectable = mapper.mapped_table
+
+            info = getattr(persist_selectable, 'info', {})
             bind_key = info.get('bind_key')
             if bind_key is not None:
                 state = get_state(self.app)
