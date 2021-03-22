@@ -11,7 +11,7 @@ def decorate_all_functions(function_decorator):
     def decorator(cls):
        # 'one_or_none' included in 'one' 
         funcs_to_skip = ['bind', 'correlate', 'enable_eagerloads', 'with_labels', 'options', 'add_columns', 
-        'offset', 'limit', 'order_by', 'subquery', 'slice', 'filter', 'one']
+        'offset', 'limit', 'order_by', 'subquery', 'slice', 'filter', 'one', 'enable_assertions']
         for c in cls.__bases__:
             for name, obj in vars(c).items():
                 if name.startswith("_"):
